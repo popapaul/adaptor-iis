@@ -1,14 +1,8 @@
 {
-	"name": "@sveltejs/adapter-node",
-	"version": "4.0.1",
-	"description": "Adapter for SvelteKit apps that generates a standalone Node server",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/sveltejs/kit",
-		"directory": "packages/adapter-node"
-	},
+	"name": "@paulpopa/adapter-iis",
+	"version": "1.0.0",
+	"description": "Adapter for SvelteKit apps that generates a standalone Node server for IIS",
 	"license": "MIT",
-	"homepage": "https://kit.svelte.dev",
 	"type": "module",
 	"exports": {
 		".": {

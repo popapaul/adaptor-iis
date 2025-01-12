@@ -16,7 +16,7 @@ export default function (opts = {}) {
 	const { out = 'build', precompress, envPrefix = '' } = opts;
 
 	return {
-		name: '@sveltejs/adapter-node',
+		name: '@paulpopa/adapter-iis',
 
 		async adapt(builder) {
 			const tmp = builder.getBuildDirectory('adapter-node');
