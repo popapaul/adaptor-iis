@@ -46,7 +46,7 @@ export default function (opts = {}) {
                 </rule>`
 
 			if(builder.config.kit.paths.base)
-				config = config.replace('<!--RULES-->','<!--RULES-->\n<rules>' + '\n' + rule );
+				config = config.replace('<!--RULES-->','<!--RULES-->\n' + rule );
 			else
 				config = config.replace('</rules>',rule+'\n</rules>'  );
 
