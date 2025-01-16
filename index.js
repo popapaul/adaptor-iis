@@ -37,7 +37,7 @@ export default function (opts = {}) {
 			let config = readFileSync(`${out}/web.config`, 'utf8')
 				.replace('</handlers>', `<add name="${pkg.name}" path="${pkg.name}/index.js" verb="*" modules="iisnode" />\n</handlers>`);
 
-			const rule = `<rule name="Dynamic${pkg.name}" stopProcessing="true">
+			const rule = `<rule name="${pkg.name}" stopProcessing="true">
                     <match url="${builder.config.kit.paths.base??""}(.*)" />
                     <conditions>
                         <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="True" />
@@ -46,7 +46,7 @@ export default function (opts = {}) {
                 </rule>`
 
 			if(builder.config.kit.paths.base)
-				config = config.replace('<rules>','<rules>' + '\n' + rule );
+				config = config.replace('<!--RULES-->','<!--RULES-->\n<rules>' + '\n' + rule );
 			else
 				config = config.replace('</rules>',rule+'\n</rules>'  );
 
