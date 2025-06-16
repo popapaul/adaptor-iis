@@ -29,20 +29,22 @@
 	"devDependencies": {
 		"@sveltejs/kit": "^2.9.0",
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
+		"@types/compression": "^1.7.5",
 		"@types/node": "^18.19.3",
 		"c8": "^9.0.0",
+		"compression": "^1.7.4",
 		"polka": "1.0.0-next.24",
+		
 		"sirv": "^2.0.4",
 		"typescript": "^5.3.3",
-		"vitest": "^1.2.0",
-		"@types/compression": "^1.7.5",
-		"compression": "^1.7.4"
+		"vitest": "^1.2.0"
 	},
 	"dependencies": {
-		"@rollup/plugin-terser": "^0.4.4",
+		"rolldown": "1.0.0-beta.11",
 		"@rollup/plugin-commonjs": "^25.0.7",
 		"@rollup/plugin-json": "^6.1.0",
 		"@rollup/plugin-node-resolve": "^15.2.3",
+		"@rollup/plugin-terser": "^0.4.4",
 		"rollup": "^4.12.0"
 	},
 	"peerDependencies": {
