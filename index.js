@@ -5,7 +5,7 @@ import fs from 'fs';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { rolldown } from 'rolldown';
+import { rollup } from 'rollup';
 
 
 const files = fileURLToPath(new URL('./files', import.meta.url).href);
@@ -82,12 +82,12 @@ export default function (opts = {}) {
 			// we bundle the Vite output so that deployments only need
 			// their production dependencies. Anything in devDependencies
 			// will get included in the bundled code
-			const bundle = await rolldown({
+			const bundle = await rollup({
 				input: {
 					index: `${tmp}/index.js`,
 					manifest: `${tmp}/manifest.js`,
 				},
-				platform: "node",
+				//platform: "node",
 				onwarn: (message) => {
 					if (message.code === 'CIRCULAR_DEPENDENCY') {
 						return;
@@ -97,21 +97,29 @@ export default function (opts = {}) {
 					}
 					console.error(message);
 				},
-				//context: 'global',
+				context: 'global',
 				external: [
 					// dependencies could have deep exports, so we need a regex
 					...Object.keys(pkg.dependencies || {}).map((d) => new RegExp(`^${d}(\\/.*)?$`))
 				],
 				
 				plugins: [
-					// nodeResolve({
-					// 	preferBuiltins: true,
-					// 	exportConditions: ['node']
+					nodeResolve({
+						preferBuiltins: true,
+						exportConditions: ['node']
+					}),
+					// terser({
+					// 	mangle: false,
+					// 	keep_classnames: true,
+					// 	maxWorkers: 4,
+					// 	format:{
+					// 		comments:false
+					// 	}
 					// }),
-					// @ts-ignore https://github.com/rollup/plugins/issues/1329
-				//	commonjs({ strictRequires: true }),
-					// @ts-ignore https://github.com/rollup/plugins/issues/1329
-				//	json()
+				//	@ts-ignore https://github.com/rollup/plugins/issues/1329
+					commonjs({ strictRequires: true }),
+					//@ts-ignore https://github.com/rollup/plugins/issues/1329
+					json()
 				]
 			});
 
@@ -119,7 +127,8 @@ export default function (opts = {}) {
 				dir: `${out}/${pkg.name}/server`,
 				format: 'esm',
 				sourcemap: false,
-				//chunkFileNames: '[name].js',
+				chunkFileNames: '[name].js',
+				manualChunks: () => 'server',
 				banner: `import { URL as URL_DIR } from 'url';\nconst __dirname = new URL_DIR('.', import.meta.url).pathname;\n`
 			});
 
